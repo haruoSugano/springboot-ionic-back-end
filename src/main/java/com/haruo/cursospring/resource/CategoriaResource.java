@@ -18,7 +18,7 @@ public class CategoriaResource {
 	private CategoriaService service;
 
 	@RequestMapping(value="/{id}", method=RequestMethod.GET) // Na busca de categoria é possível de duas formas: pelo id ou por categorias (browser)
-	public ResponseEntity<?> find(@PathVariable Integer id) { // Este método recebe o id, para o spring identificar é necessário adicionar @PathVariable
+	public ResponseEntity<?> find(@PathVariable Integer id) { // Este método recebe o id, para o spring identificar/ é necessário adicionar @PathVariable para a indentificação
 		// ResponseEntity: Encapsula e armazena várias informações de uma resposta HTTP para o serviço REST.
 		// <?> significa que pode ser de qualquer tipo.
 		
