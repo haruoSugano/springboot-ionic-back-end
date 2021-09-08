@@ -5,13 +5,16 @@ import java.io.Serializable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ItemPedido implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
+	@JsonIgnore // Não vai ser serializado
 	@EmbeddedId
-	private ItemPedidoPK id = new ItemPedidoPK();
+	private ItemPedidoPK id = new ItemPedidoPK(); // chave composta
 	
 	private Double desconto;
 	private Integer quantidade;
@@ -30,10 +33,12 @@ public class ItemPedido implements Serializable{
 		this.preco = preco;
 	}
 	
+	
 	public Produto getProduto() {
 		return id.getProduto();
 	}
 	
+	@JsonIgnore // tudo que começa com get ele serializa, por isso o json ignore
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
