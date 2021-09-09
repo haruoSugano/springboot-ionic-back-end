@@ -32,13 +32,12 @@ import com.haruo.cursospring.repositories.PedidoRepository;
 import com.haruo.cursospring.repositories.ProdutoRepository;
 
 @SpringBootApplication
-public class CursospringApplication implements CommandLineRunner{ // CommandLineRunner, ao executar a aplicacao permite que, o metódo inicie com uma ação. 
+public class CursospringApplication implements CommandLineRunner{ 
 	
-	// Criando as dependências:
 	@Autowired
-	private CategoriaRepository categoriaRepository; // É o responsável  por salvar as categorias
+	private CategoriaRepository categoriaRepository; 
 	@Autowired
-	private ProdutoRepository produtoRepository; // Responsável por salvar os produtos
+	private ProdutoRepository produtoRepository; 
 	@Autowired
 	private EstadoRepository estadoRepository;
 	@Autowired
@@ -58,34 +57,31 @@ public class CursospringApplication implements CommandLineRunner{ // CommandLine
 		SpringApplication.run(CursospringApplication.class, args);
 	}
 
-	// Método criado pelo CommandLineRunner
 	@Override
 	public void run(String... args) throws Exception {
 		/**
-		 * Instanciando os objetos:
+		 * categoria e produto
 		 */
-		Categoria categoria1 = new Categoria(null, "Informatica"); // BD gera ID automaticamente. por isso é null.
+		Categoria categoria1 = new Categoria(null, "Informatica"); 
 		Categoria categoria2 = new Categoria(null, "Escritorio");
 		
 		Produto produto1 = new Produto(null, "Computador", 2000.00);
 		Produto produto2 = new Produto(null, "Impressora", 800.00);
 		Produto produto3 = new Produto(null, "Mouse", 80.00);
 		
-		/**
-		 * Associando Categoria com produtos e Produto com categorias:
-		 */
-		categoria1.getProdutos().addAll(Arrays.asList(produto1, produto2, produto3)); // Produtos associados com categoria1
-		categoria2.getProdutos().addAll(Arrays.asList(produto2)); // Produtos associados com categoria2
+	
+		categoria1.getProdutos().addAll(Arrays.asList(produto1, produto2, produto3)); 
+		categoria2.getProdutos().addAll(Arrays.asList(produto2));
 		
-		produto1.getCategorias().addAll(Arrays.asList(categoria1)); // Categoria associados com produtos
+		produto1.getCategorias().addAll(Arrays.asList(categoria1)); 
 		produto2.getCategorias().addAll(Arrays.asList(categoria1, categoria2));
 		produto3.getCategorias().addAll(Arrays.asList(categoria1));
 		
-		// Salvando categoria ao banco D:
-		categoriaRepository.saveAll(Arrays.asList(categoria1, categoria2)); // Chamando -> categoriaRepository e uma função para salvar -> saveAll() 
-		// Salvando produtos ao banco D:
+	
+		categoriaRepository.saveAll(Arrays.asList(categoria1, categoria2)); 
+	
 		produtoRepository.saveAll(Arrays.asList(produto1, produto2, produto3));
-		// Arrays.asList() criar uma lista automatico.
+		
 		
 		/**
 		 * Estado e Cidade
@@ -120,6 +116,8 @@ public class CursospringApplication implements CommandLineRunner{ // CommandLine
 		enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		/*Pedido, pagamento e itens*/
 		
 		Pedido pedido1 = new Pedido(null, sdf.parse("30/09/2021 10:32"),  cliente1, endereco1);
 		Pedido pedido2 = new Pedido(null, sdf.parse("10/10/2021 19:35"), cliente1, endereco2);

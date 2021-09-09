@@ -26,7 +26,7 @@ public class Pedido implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm") // Formantando a data e o horário
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm") 
 	private Date instante;
 	
 	//@JsonManagedReference

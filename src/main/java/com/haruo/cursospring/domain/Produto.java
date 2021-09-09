@@ -28,17 +28,17 @@ public class Produto implements Serializable{
 	private String name;
 	private Double price;
 	
-	//Mapeamento de relacionamento: 
-	//@JsonBackReference // tratando referência ciclica " do outro lado da associação ja foram buscado os objetos" assim omitindo uma categoria para cada produto
-	@JsonIgnore
-	@ManyToMany // Relacionamento de muitos para muitos
-	@JoinTable(name = "PRODUTO_CATEGORIA", // Definindo a tabela que será feita a tabela relacional/ Nome da tabela
-		joinColumns = @JoinColumn(name = "produto_id"), // Nome do campo da chave estrangeira (produto)
-		inverseJoinColumns = @JoinColumn(name = "categoria_id")// Nome da outra chave estrangeira
-	)
-	private List<Categoria> categorias = new ArrayList<>(); // Produto tem várias categorias
 	
-	@JsonIgnore // Bloqueando o acesso
+	//@JsonBackReference 
+	@JsonIgnore
+	@ManyToMany 
+	@JoinTable(name = "PRODUTO_CATEGORIA", 
+		joinColumns = @JoinColumn(name = "produto_id"), 
+		inverseJoinColumns = @JoinColumn(name = "categoria_id")
+	)
+	private List<Categoria> categorias = new ArrayList<>(); 
+	
+	@JsonIgnore 
 	@OneToMany(mappedBy="id.produto")
 	private Set<ItemPedido> itens = new HashSet<>();
 	
@@ -52,8 +52,8 @@ public class Produto implements Serializable{
 		this.price = price;
 	}
 	
-	@JsonIgnore // Bloqueando o acesso
-	public List<Pedido> getPedidos(){ // pedidos associados ao produto
+	@JsonIgnore
+	public List<Pedido> getPedidos(){ 
 		List<Pedido> lista = new ArrayList<>();
 		for (ItemPedido x : itens) {
 			lista.add(x.getPedido());

@@ -12,7 +12,7 @@ public class PagamentoComBoleto extends Pagamento{
 
 	private static final long serialVersionUID = 1L;
 	
-	@JsonFormat(pattern="dd/MM/yyyy") // Formatando a data
+	@JsonFormat(pattern="dd/MM/yyyy") 
 	private Date dataVencimento;
 	private Date dataPagamento;
 	

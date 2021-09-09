@@ -12,9 +12,9 @@ public class ItemPedido implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	@JsonIgnore // Não vai ser serializado
+	@JsonIgnore 
 	@EmbeddedId
-	private ItemPedidoPK id = new ItemPedidoPK(); // chave composta
+	private ItemPedidoPK id = new ItemPedidoPK(); 
 	
 	private Double desconto;
 	private Integer quantidade;
@@ -38,7 +38,7 @@ public class ItemPedido implements Serializable{
 		return id.getProduto();
 	}
 	
-	@JsonIgnore // tudo que começa com get ele serializa, por isso o json ignore
+	@JsonIgnore 
 	public Pedido getPedido() {
 		return id.getPedido();
 	}

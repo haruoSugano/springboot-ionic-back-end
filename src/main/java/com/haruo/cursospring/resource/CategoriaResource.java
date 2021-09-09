@@ -1,11 +1,15 @@
 package com.haruo.cursospring.resource;
 
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.haruo.cursospring.domain.Categoria;
 import com.haruo.cursospring.services.CategoriaService;
@@ -14,18 +18,26 @@ import com.haruo.cursospring.services.CategoriaService;
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
 	
-	@Autowired // Acessando o servico
+	@Autowired
 	private CategoriaService service;
 
-	@RequestMapping(value="/{id}", method=RequestMethod.GET) // Na busca de categoria é possível de duas formas: pelo id ou por categorias (browser)
-	public ResponseEntity<?> find(@PathVariable Integer id) { // Este método recebe o id, para o spring identificar/ é necessário adicionar @PathVariable para a indentificação
-		// ResponseEntity: Encapsula e armazena várias informações de uma resposta HTTP para o serviço REST.
-		// <?> significa que pode ser de qualquer tipo.
+	@RequestMapping(value="/{id}", method=RequestMethod.GET) 
+	public ResponseEntity<?> find(@PathVariable Integer id) { 
 		
 		Categoria categoria = service.buscar(id);
-		/**
-		 * Retornando em formato JSON
-		 */
-		return ResponseEntity.ok().body(categoria); // ResponseEntity.ok(): A resposta ocorreu com sucesso   .body(categoria): Esta resposta tem o corpo o objeto que buscou
+
+		return ResponseEntity.ok().body(categoria); 
+	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@RequestBody Categoria categoria) { // RequestBody -> converte objeto JSON em objeto java
+		categoria = service.insert(categoria); // vai inserir este objeto no banco de dados
+		// Fornecendo a URI 
+		URI uri = ServletUriComponentsBuilder
+				.fromCurrentRequest()  //localhost:8080/categorias (fromCurrentRequest() ) 
+				.path("/{id}") // mostrando o caminho   localhost:8080/categoria/ path("/{id}")
+				.buildAndExpand(categoria.getId())  // atribuir o valor ao path(id) -> buildAndExpand....
+				.toUri(); // convertendo para uri
+		return ResponseEntity.created(uri).build(); // created -> gera o código 201 -> recebendo o uri como argumento -> chamando a build() para gerar a resposta.
 	}
 }

@@ -4,15 +4,14 @@ import java.io.Serializable;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
-// Objeto auxiliar para informar erros padrões
 @ControllerAdvice
 public class StandardError  implements Serializable{
 
 		private static final long serialVersionUID = 1L;
 		
-		private Integer status; // status http do erro
-		private String msg; // mensagem
-		private Long timeStamp; // o instante onde aconteceu o erro
+		private Integer status; 
+		private String msg; 
+		private Long timeStamp; 
 		
 		public StandardError() {
 		}
