@@ -22,9 +22,9 @@ public class CategoriaResource {
 	private CategoriaService service;
 
 	@RequestMapping(value="/{id}", method=RequestMethod.GET) 
-	public ResponseEntity<?> find(@PathVariable Integer id) { 
+	public ResponseEntity<Categoria> find(@PathVariable Integer id) { 
 		
-		Categoria categoria = service.buscar(id);
+		Categoria categoria = service.find(id);
 
 		return ResponseEntity.ok().body(categoria); 
 	}
@@ -39,5 +39,12 @@ public class CategoriaResource {
 				.buildAndExpand(categoria.getId())  // atribuir o valor ao path(id) -> buildAndExpand....
 				.toUri(); // convertendo para uri
 		return ResponseEntity.created(uri).build(); // created -> gera o código 201 -> recebendo o uri como argumento -> chamando a build() para gerar a resposta.
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria categoria, @PathVariable Integer id){
+		categoria.setId(id);
+		categoria = service.update(categoria);
+		return ResponseEntity.noContent().build();
 	}
 }

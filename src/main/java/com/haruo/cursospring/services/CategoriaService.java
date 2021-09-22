@@ -1,6 +1,5 @@
 package com.haruo.cursospring.services;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository repository; 
 	
-	public Categoria buscar(Integer id) {
+	public Categoria find(Integer id) {
 		Optional<Categoria> categoria = repository.findById(id);
 		
 		return categoria.orElseThrow( () -> new ObjectNotFoundException (
@@ -26,6 +25,11 @@ public class CategoriaService {
 	
 	public Categoria insert(Categoria categoria) {
 		categoria.setId(null); // Objeto a ser inserido, precisa ter o id nulo.
+		return repository.save(categoria);
+	}
+	
+	public Categoria update(Categoria categoria) {
+		find(categoria.getId()); // Faz a busca pelo id, se caso não exister ele trata a excessão
 		return repository.save(categoria);
 	}
 }
