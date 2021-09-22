@@ -29,6 +29,11 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(categoria); 
 	}
 	
+	/**
+	 * Inserindo uma categoria ao BD
+	 * @param categoria
+	 * @return
+	 */
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Categoria categoria) { // RequestBody -> converte objeto JSON em objeto java
 		categoria = service.insert(categoria); // vai inserir este objeto no banco de dados
@@ -41,10 +46,27 @@ public class CategoriaResource {
 		return ResponseEntity.created(uri).build(); // created -> gera o código 201 -> recebendo o uri como argumento -> chamando a build() para gerar a resposta.
 	}
 	
+	/**
+	 * Atualizando uma categoria
+	 * @param categoria
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Categoria categoria, @PathVariable Integer id){
 		categoria.setId(id);
 		categoria = service.update(categoria);
 		return ResponseEntity.noContent().build();
+	}
+	
+	/**
+	 * Deletando uma categoria
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE) 
+	public ResponseEntity<Void> delete(@PathVariable Integer id) { // Retornar uma resposta com corpo vazio(void)
+		 service.delete(id);
+		 return ResponseEntity.noContent().build();
 	}
 }
